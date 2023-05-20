@@ -5,16 +5,16 @@ import { Client } from 'discord.js'
 dotenv ()
 
 let regexes = [
-    /<h1.+?>(.+?)<\/h1>/m,
-    /<span>(Shares Outstanding).+?<td.+?>(.+?)</m,
-    /<span>(Implied Shares Outstanding).+?<td.+?>(.+?)</m,
-    /<span>(Float).+?<td.+?>(.+?)</m,
-    /<span>(% Held by Insiders).+?<td.+?>(.+?)</m,
-    /<span>(% Held by Institutions).+?<td.+?>(.+?)</m,
-    /<span>(Shares Short \(.+?\)).+?<td.+?>(.+?)</m,
-    /<span>(Short % of Float \(.+?\)).+?<td.+?>(.+?)</m,
-    /<span>(Shares Short \(prior month .+?\)).+?<td.+?>(.+?)</m,
-    /<span>(Market Cap).+?<td.+?>(.+?)</m,
+    /<h1.+?>(.+?)<\/h1>/,
+    /<span>(Shares Outstanding).+?<td.+?>(.+?)</,
+    /<span>(Implied Shares Outstanding).+?<td.+?>(.+?)</,
+    /<span>(Float).+?<td.+?>(.+?)</,
+    /<span>(% Held by Insiders).+?<td.+?>(.+?)</,
+    /<span>(% Held by Institutions).+?<td.+?>(.+?)</,
+    /<span>(Shares Short \(.+?\)).+?<td.+?>(.+?)</,
+    /<span>(Short % of Float \(.+?\)).+?<td.+?>(.+?)</,
+    /<span>(Shares Short \(prior month .+?\)).+?<td.+?>(.+?)</,
+    /<span>(Market Cap).+?<td.+?>(.+?)</,
 ]
 
 let discord = new Client ({ intents: 33281 })
