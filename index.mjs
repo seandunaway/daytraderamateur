@@ -29,7 +29,7 @@ discord .on ('messageCreate', async function (message) {
         text = await response .text ()
     } catch { return }
 
-    let reply = ''
+    let reply = "\n"
     for (let regex of regexes) {
         let match = text .match (regex)
         if (! match) continue
