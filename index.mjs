@@ -1,7 +1,8 @@
 #!/usr/bin/env node
-// https://discord.com/api/oauth2/authorize?client_id=1109514098791698502&permissions=3072&scope=bot
-
+import { config as dotenv } from 'dotenv'
 import { Client } from 'discord.js'
+
+dotenv ()
 
 let regexes = [
     /<h1.+?>(.+?)<\/h1>/m,
@@ -46,4 +47,4 @@ discord.on ('ready', function (client) {
     console.log (new Date (), client.user.tag, 'ready!')
 })
 
-discord.login ('MTEwOTUxNDA5ODc5MTY5ODUwMg.G5I1wC.VsF-9bZvbYqGG5fgfTDoPdWy6rB7G6xTR5iVVQ')
+discord.login ()
