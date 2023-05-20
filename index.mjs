@@ -19,32 +19,32 @@ let regexes = [
 
 let discord = new Client ({ intents: 33281 })
 
-discord.on ('messageCreate', async function (message) {
-    let symbol = message.content.match (/^\$([a-zA-Z]{1,5})$/)
+discord .on ('messageCreate', async function (message) {
+    let symbol = message.content .match (/^\$([a-zA-Z]{1,5})$/)
     if (! symbol) return
 
     let text
     try {
         let response = await fetch (`https://finance.yahoo.com/quote/${symbol [1]}/key-statistics`)
-        text = await response.text ()
+        text = await response .text ()
     } catch { return }
 
     let reply = ''
     for (let regex of regexes) {
-        let match = text.match (regex)
+        let match = text .match (regex)
         if (! match) continue
-        if (match [2] && match [2].includes ('N/A')) continue
+        if (match [2] && match [2] .includes ('N/A')) continue
 
         reply += `${match [1]}`
         if (match [2]) reply += `: ${match [2]}`
         reply += "\n"
     }
 
-    message.reply (reply)
+    message .reply (reply)
 })
 
-discord.on ('ready', function (client) {
-    console.log (new Date (), client.user.tag, 'ready!')
+discord .on ('ready', function (client) {
+    console .log (new Date (), client.user.tag, 'ready!')
 })
 
-discord.login ()
+discord .login ()
