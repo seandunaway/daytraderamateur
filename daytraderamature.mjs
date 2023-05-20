@@ -3,40 +3,43 @@
 
 import { Client } from 'discord.js'
 
+let regexes = [
+    /<h1.+?>(.+?)<\/h1>/m,
+    /<span>(Shares Outstanding).+?<td.+?>(.+?)</m,
+    /<span>(Implied Shares Outstanding).+?<td.+?>(.+?)</m,
+    /<span>(Float).+?<td.+?>(.+?)</m,
+    /<span>(% Held by Insiders).+?<td.+?>(.+?)</m,
+    /<span>(% Held by Institutions).+?<td.+?>(.+?)</m,
+    /<span>(Shares Short \(.+?\)).+?<td.+?>(.+?)</m,
+    /<span>(Short % of Float \(.+?\)).+?<td.+?>(.+?)</m,
+    /<span>(Shares Short \(prior month .+?\)).+?<td.+?>(.+?)</m,
+    /<span>(Market Cap).+?<td.+?>(.+?)</m,
+]
+
 let discord = new Client ({ intents: 33281 })
 
 discord.on ('messageCreate', async function (message) {
     let symbol = message.content.match (/^\$([a-zA-Z]{1,5})$/)
     if (! symbol) return
 
+    let text
     try {
         let response = await fetch (`https://finance.yahoo.com/quote/${symbol [1]}/key-statistics`)
-        let text = await response.text ()
-
-        let name = text.match (/<h1.+?>(.+?)<\/h1>/m)
-        let shares_outstanding = text.match (/<span>(Shares Outstanding).+?<td.+?>(.+?)</m)
-        let shares_outstanding_implied = text.match (/<span>(Implied Shares Outstanding).+?<td.+?>(.+?)</m)
-        let float = text.match (/<span>(Float).+?<td.+?>(.+?)</m)
-        let percent_insiders = text.match (/<span>(% Held by Insiders).+?<td.+?>(.+?)</m)
-        let percent_institutions = text.match (/<span>(% Held by Institutions).+?<td.+?>(.+?)</m)
-        let short_shares = text.match (/<span>(Shares Short \(.+?\)).+?<td.+?>(.+?)</m)
-        let short_percent = text.match (/<span>(Short % of Float \(.+?\)).+?<td.+?>(.+?)</m)
-        let short_shares_prior = text.match (/<span>(Shares Short \(prior month .+?\)).+?<td.+?>(.+?)</m)
-        let market_cap = text.match (/<span>(Market Cap).+?<td.+?>(.+?)</m)
-
-        message.reply (
-            `${name [1]}
-            ${shares_outstanding [1]}: ${shares_outstanding [2]}
-            ${shares_outstanding_implied [1]}: ${shares_outstanding_implied [2]}
-            ${float [1]}: ${float [2]}
-            ${percent_insiders [1]}: ${percent_insiders [2]}
-            ${percent_institutions [1]}: ${percent_institutions [2]}
-            ${short_shares [1]}: ${short_shares [2]}
-            ${short_percent [1]}: ${short_percent [2]}
-            ${short_shares_prior [1]}: ${short_shares_prior [2]}
-            ${market_cap [1]}: ${market_cap [2]}`
-        )
+        text = await response.text ()
     } catch { return }
+
+    let reply = ''
+    for (let regex of regexes) {
+        let match = text.match (regex)
+        if (! match) continue
+        if (match [2] && match [2].includes ('N/A')) continue
+
+        reply += `${match [1]}`
+        if (match [2]) reply += `: ${match [2]}`
+        reply += "\n"
+    }
+
+    message.reply (reply)
 })
 
 discord.on ('ready', function (client) {
