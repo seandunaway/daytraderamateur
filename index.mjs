@@ -13,7 +13,7 @@ let regexes = [
     /<span>(% Held by Institutions).+?<td.+?>(.+?)</,
     /<span>(Shares Short \(.+?\)).+?<td.+?>(.+?)</,
     /<span>(Short % of Float \(.+?\)).+?<td.+?>(.+?)</,
-    /<span>(Shares Short \(prior month .+?\)).+?<td.+?>(.+?)</,
+    /<span>(Shares Short \(prior month .*?\)).+?<td.+?>(.+?)</,
     /<span>(Market Cap).+?<td.+?>(.+?)</,
 ]
 
