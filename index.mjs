@@ -44,6 +44,13 @@ discord .on ('messageCreate', async function (message) {
 })
 
 discord .on ('ready', function (client) {
+    client.user.setPresence ({
+        activities: [{
+            type: 3,
+            name: '$symbol',
+        }],
+    })
+
     console .log (new Date (), client.user.tag, 'ready!')
 })
 
