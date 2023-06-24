@@ -40,6 +40,9 @@ discord .on ('messageCreate', async function (message) {
         reply += "\n"
     }
 
+    reply += `<https://www.sec.gov/cgi-bin/browse-edgar?CIK=${symbol [1] .toUpperCase ()}>\n`
+    reply += `<https://finance.yahoo.com/quote/${symbol [1] . toUpperCase ()}/news>\n`
+
     message .reply (reply)
 })
 
